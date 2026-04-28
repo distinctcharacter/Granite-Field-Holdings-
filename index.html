@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Granite Field Holdings, Ltd. Co. — Strategic Asset & Intellectual Property Management. A private holding company managing diversified portfolios of intellectual property and digital assets." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Granite Field Holdings, Ltd. Co." />
+  <meta property="og:description" content="Strategic Asset & Intellectual Property Management" />
+  <meta property="og:type" content="website" />
+  <title>Granite Field Holdings, Ltd. Co.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── CSS Variables ───────────────────────────────────────── */
+    :root {
+      --bg:          #09090b;
+      --bg-panel:    #0f1013;
+      --bg-card:     #141418;
+      --border:      #1e1e24;
+      --border-lite: #2a2a34;
+      --gold:        #b89456;
+      --gold-light:  #d4b07a;
+      --gold-dim:    #7a6038;
+      --text:        #ddd8cf;
+      --text-muted:  #7a7873;
+      --text-faint:  #3e3e40;
+      --white:       #f0ece5;
+      --serif:       'Cormorant Garamond', Georgia, serif;
+      --sans:        'Jost', 'Helvetica Neue', sans-serif;
+      --nav-h:       68px;
+    }
+
+    /* ── Reset ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ── Grain Overlay ───────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.4;
+    }
+
+    /* ── Navigation ──────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(9, 9, 11, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(20px, 5vw, 72px);
+    }
+    .nav-brand {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .nav-brand:hover { color: var(--gold-light); }
+    .nav-brand span {
+      display: block;
+      font-family: var(--sans);
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 2px;
+    }
+    .nav-links {
+      display: flex; gap: 2px; align-items: center;
+    }
+    .nav-links button {
+      background: none; border: none; cursor: pointer;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 8px 14px;
+      border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links button:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .nav-links button.active {
+      color: var(--gold-light);
+      background: rgba(184,148,86,0.08);
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer;
+      padding: 6px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 1px;
+      background: var(--text-muted);
+      transition: all 0.3s;
+    }
+
+    /* ── Page System ─────────────────────────────────────────── */
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .page.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Section Utility ─────────────────────────────────────── */
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 72px);
+    }
+    .section-label {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+    .rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────── */
+    /* PAGE 1 — HOME / HERO                                        */
+    /* ─────────────────────────────────────────────────────────── */
+    #page-home {
+      position: relative;
+      display: none;
+      flex-direction: column;
+    }
+    #page-home.active { display: flex; }
+
+    .hero {
+      flex: 1;
+      display: flex; align-items: center;
+      min-height: calc(100vh - var(--nav-h));
+      padding: 80px clamp(20px, 5vw, 72px) 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Subtle geometric background */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 70% 40%, rgba(184,148,86,0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 20% 80%, rgba(184,148,86,0.025) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 80px 80px;
+      opacity: 0.3;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: 1120px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .hero-left {}
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block; width: 32px; height: 1px;
+      background: var(--gold-dim);
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 5vw, 4.6rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .hero-subtitle {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+    .hero-cta-row {
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold);
+      color: var(--bg);
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border: none; cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border: 1px solid var(--border-lite);
+      cursor: pointer;
+      transition: border-color 0.25s, color 0.25s;
+    }
+    .btn-ghost:hover { border-color: var(--gold-dim); color: var(--text); }
+
+    .hero-right {
+      display: flex; flex-direction: column; gap: 1px;
+    }
+    .hero-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s;
+    }
+    .hero-stat:hover { border-color: var(--border-lite); }
+    .hero-stat::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .hero-stat:hover::before { opacity: 1; }
+    .hero-stat-label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .hero-stat-value {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--white);
+    }
+
+    .hero-scroll-indicator {
+      position: absolute; bottom: 32px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0.35;
+      animation: bounce 2.4s ease-in-out infinite;
+    }
+    .hero-scroll-indicator span {
+      font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .scroll-arrow {
+      width: 18px; height: 18px;
+      border-right: 1px solid var(--text-muted);
+      border-bottom: 1px solid var(--text-muted);
+      transform: rotate(45deg);
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─────────────────────────────────────────────────────────── */
+    /* PAGE 2 — ABOUT                                              */
+    /* ─────────────────────────────────────────────────────────── */
+    .page-header {
+      padding: 80px clamp(20px, 5vw, 72px) 64px;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .page-header::after {
+      content: '';
+      position: absolute; right: -40px; top: -40px;
+      width: 340px; height: 340px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .page-header-inner { max-width: 1120px; margin: 0 auto; }
+    .page-title {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .page-intro {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      line-height: 1.8;
+    }
+
+    .about-body {
+      padding: 72px clamp(20px, 5vw, 72px);
+    }
+    .about-grid {
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: 5fr 4fr; gap: 80px;
+      align-items: start;
+    }
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-text strong {
+      font-weight: 500;
+      color: var(--white);
+    }
+
+    .about-sidebar { display: flex; flex-direction: column; gap: 1px; }
+    .sidebar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 28px;
+    }
+    .sidebar-card-title {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .sidebar-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .about-pillars {
+      padding: 0 clamp(20px, 5vw, 72px) 80px;
+      border-top: 1px solid var(--border);
+    }
+    .pillars-inner {
+      max-width: 1120px; margin: 0 auto;
+      padding-top: 64px;
+    }
+    .pillars-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 40px;
+    }
+    .pillar {
+      background: var(--bg-panel);
+      padding: 40px 36px;
+      transition: background 0.25s;
+    }
+    .pillar:hover { background: var(--bg-card); }
+    .pillar-num {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--border-lite);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .pillar-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .pillar p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    /* ─────────────────────────────────────────────────────────── */
+    /* PAGE 3 — GOVERNANCE & OPERATIONS                            */
+    /* ─────────────────────────────────────────────────────────── */
+    .ops-body {
+      padding: 72px clamp(20px, 5vw, 72px);
+    }
+    .ops-inner { max-width: 1120px; margin: 0 auto; }
+    .ops-lead {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      max-width: 720px;
+      line-height: 1.7;
+      border-left: 2px solid var(--gold-dim);
+      padding-left: 28px;
+      margin-bottom: 72px;
+    }
+
+    .ops-areas {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+    .ops-area {
+      background: var(--bg-panel);
+      padding: 48px 44px;
+      transition: background 0.25s;
+    }
+    .ops-area:hover { background: var(--bg-card); }
+    .ops-area-icon {
+      width: 40px; height: 40px;
+      border: 1px solid var(--border-lite);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+    }
+    .ops-area-icon svg { width: 18px; height: 18px; fill: none; stroke: var(--gold); stroke-width: 1.5; }
+    .ops-area h3 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .ops-area p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+    .ops-area ul {
+      margin-top: 16px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .ops-area li {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      padding-left: 18px;
+      position: relative;
+    }
+    .ops-area li::before {
+      content: '';
+      position: absolute; left: 0; top: 10px;
+      width: 6px; height: 1px;
+      background: var(--gold-dim);
+    }
+
+    .governance-note {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold-dim);
+      padding: 36px 40px;
+    }
+    .governance-note-title {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .governance-note p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    /* ─────────────────────────────────────────────────────────── */
+    /* PAGE 4 — COMPLIANCE & LEGAL                                 */
+    /* ─────────────────────────────────────────────────────────── */
+    .compliance-body {
+      padding: 72px clamp(20px, 5vw, 72px) 80px;
+    }
+    .compliance-inner { max-width: 1120px; margin: 0 auto; }
+    .compliance-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 40px;
+    }
+    .compliance-block {
+      background: var(--bg-panel);
+      padding: 40px 36px;
+    }
+    .compliance-block h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+    .compliance-block p, .compliance-block li {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+    .compliance-block ul {
+      display: flex; flex-direction: column; gap: 8px;
+      margin-top: 8px;
+    }
+    .compliance-block li {
+      padding-left: 18px; position: relative;
+    }
+    .compliance-block li::before {
+      content: '';
+      position: absolute; left: 0; top: 10px;
+      width: 6px; height: 1px;
+      background: var(--gold-dim);
+    }
+
+    .legal-disclaimer {
+      margin-top: 1px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 40px;
+    }
+    .legal-disclaimer h3 {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .legal-disclaimer p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    .legal-disclaimer p:last-child { margin-bottom: 0; }
+
+    /* ─────────────────────────────────────────────────────────── */
+    /* PAGE 5 — CONTACT                                            */
+    /* ─────────────────────────────────────────────────────────── */
+    .contact-body {
+      padding: 72px clamp(20px, 5vw, 72px) 80px;
+    }
+    .contact-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    }
+    .contact-info h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+    .contact-detail {
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+    }
+    .contact-detail:last-child { border-bottom: 1px solid var(--border); }
+    .contact-detail-label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .contact-detail-value {
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .contact-detail-value a {
+      color: var(--text);
+      transition: color 0.2s;
+    }
+    .contact-detail-value a:hover { color: var(--gold-light); }
+
+    .contact-notice {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--gold-dim);
+      padding: 40px;
+      align-self: start;
+    }
+    .contact-notice-title {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .contact-notice p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .contact-notice p:last-child { margin-bottom: 0; }
+    .contact-notice strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    footer {
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      padding: 40px clamp(20px, 5vw, 72px);
+    }
+    .footer-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap;
+    }
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .footer-copy {
+      font-size: 0.72rem;
+      color: var(--text-faint);
+      letter-spacing: 0.05em;
+    }
+    .footer-links {
+      display: flex; gap: 24px;
+    }
+    .footer-links button {
+      background: none; border: none; cursor: pointer;
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      transition: color 0.2s;
+    }
+    .footer-links button:hover { color: var(--text-muted); }
+
+    /* ── Mobile ──────────────────────────────────────────────── */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: rgba(9,9,11,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      flex-direction: column; gap: 4px;
+      z-index: 999;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu button {
+      background: none; border: none; cursor: pointer;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 12px 16px;
+      text-align: left;
+      transition: color 0.2s;
+    }
+    .mobile-menu button:hover, .mobile-menu button.active { color: var(--gold-light); }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-right { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .ops-areas { grid-template-columns: 1fr; }
+      .compliance-grid { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+
+    /* ── Entrance animation ──────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .page.active .hero-eyebrow { animation: fadeUp 0.5s ease 0.05s both; }
+    .page.active .hero-title   { animation: fadeUp 0.5s ease 0.15s both; }
+    .page.active .hero-subtitle{ animation: fadeUp 0.5s ease 0.25s both; }
+    .page.active .hero-cta-row { animation: fadeUp 0.5s ease 0.35s both; }
+    .page.active .hero-right   { animation: fadeUp 0.5s ease 0.45s both; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ─────────────────────────────────────────── -->
+  <nav>
+    <div class="nav-brand" onclick="showPage('home')">
+      Granite Field Holdings
+      <span>Ltd. Co.</span>
+    </div>
+    <ul class="nav-links" role="menubar">
+      <li><button class="active" onclick="showPage('home')"    role="menuitem">Overview</button></li>
+      <li><button            onclick="showPage('about')"   role="menuitem">About</button></li>
+      <li><button            onclick="showPage('operations')" role="menuitem">Governance</button></li>
+      <li><button            onclick="showPage('compliance')" role="menuitem">Compliance</button></li>
+      <li><button            onclick="showPage('contact')"  role="menuitem">Contact</button></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── Mobile Menu ─────────────────────────────────────────── -->
+  <div class="mobile-menu" id="mobile-menu" role="menu">
+    <button onclick="showPage('home');    closeMenu()" role="menuitem">Overview</button>
+    <button onclick="showPage('about');   closeMenu()" role="menuitem">About</button>
+    <button onclick="showPage('operations'); closeMenu()" role="menuitem">Governance</button>
+    <button onclick="showPage('compliance'); closeMenu()" role="menuitem">Compliance</button>
+    <button onclick="showPage('contact'); closeMenu()" role="menuitem">Contact</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- PAGE: HOME                                                  -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <main id="page-home" class="page active" role="main" aria-label="Home">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid-lines" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-left">
+          <div class="hero-eyebrow" aria-hidden="true">Private Holding Company · Est. New Mexico</div>
+          <h1 class="hero-title" id="hero-title">
+            Granite Field<br /><em>Holdings</em>
+          </h1>
+          <p class="hero-subtitle">Strategic Asset &amp; Intellectual Property Management</p>
+          <div class="hero-cta-row">
+            <button class="btn-primary" onclick="showPage('about')">
+              Corporate Overview
+            </button>
+            <button class="btn-ghost" onclick="showPage('contact')">
+              Inquiries
+            </button>
+          </div>
+        </div>
+        <div class="hero-right" aria-hidden="true">
+          <div class="hero-stat">
+            <div class="hero-stat-label">Entity Type</div>
+            <div class="hero-stat-value">Limited Liability Company</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-label">Jurisdiction</div>
+            <div class="hero-stat-value">State of New Mexico, USA</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-label">Operational Mandate</div>
+            <div class="hero-stat-value">IP Governance &amp; Asset Management</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-label">Structure</div>
+            <div class="hero-stat-value">Private / Non-Public</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll-indicator" aria-hidden="true">
+        <div class="scroll-arrow"></div>
+        <span>Explore</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- PAGE: ABOUT                                                 -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="page-about" class="page" role="main" aria-label="About Granite Field Holdings">
+    <header class="page-header">
+      <div class="page-header-inner">
+        <p class="section-label">Corporate Overview</p>
+        <h2 class="page-title">About Granite Field<br />Holdings</h2>
+        <p class="page-intro">A private holding company established to manage, develop, and govern a diversified portfolio of intellectual property and digital assets.</p>
+      </div>
+    </header>
+
+    <section class="about-body" aria-labelledby="about-heading">
+      <div class="about-grid">
+        <div class="about-text">
+          <p>Granite Field Holdings, Ltd. Co. is a <strong>private holding company</strong> incorporated under the laws of the State of New Mexico. The firm was established to manage, develop, and govern a diversified portfolio of intellectual property assets and digital infrastructure across multiple subsidiary entities.</p>
+          <p>Operating strictly at the <strong>architectural level</strong>, Granite Field Holdings provides strategic oversight, capital allocation, and governance frameworks for its subsidiary operations. The Company does not engage in direct consumer-facing commerce; rather, it serves as the administrative and structural parent entity for all assets held under its umbrella.</p>
+          <p>Our portfolio encompasses <strong>educational frameworks, digital infrastructure systems, cognitive and behavioral methodologies, and media distribution channels</strong>. Each asset class is managed with an emphasis on long-term sustainability, structural integrity, and rigorous intellectual privacy.</p>
+          <p>The firm maintains a deliberate posture of operational discretion and selectively engages external parties only through formal institutional channels.</p>
+        </div>
+        <aside class="about-sidebar" aria-label="Corporate details">
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">Legal Structure</div>
+            <p>Limited Liability Company (Ltd. Co.) registered in the State of New Mexico, United States of America.</p>
+          </div>
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">Operational Model</div>
+            <p>Parent holding entity operating at the architectural level. All commercial activity conducted through governed subsidiary entities.</p>
+          </div>
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">Corporate Posture</div>
+            <p>Private, non-public firm. Does not accept unsolicited proposals, partnership inquiries, or media requests.</p>
+          </div>
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">Registered Agent</div>
+            <p>1209 Mountain Road Pl NE, Suite N<br />Albuquerque, NM 87110, USA</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="about-pillars" aria-labelledby="pillars-heading">
+      <div class="pillars-inner">
+        <p class="section-label">Core Principles</p>
+        <h3 id="pillars-heading" class="page-title" style="font-size: clamp(1.6rem,3vw,2.4rem);">Foundational Commitments</h3>
+        <div class="pillars-grid">
+          <div class="pillar">
+            <div class="pillar-num" aria-hidden="true">01</div>
+            <h4 class="pillar-title">Long-Term Asset Sustainability</h4>
+            <p>Capital and intellectual assets are managed with an orientation toward durable, long-term value creation. Short-term market pressures are subordinated to structural resilience.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num" aria-hidden="true">02</div>
+            <h4 class="pillar-title">Structural Integrity</h4>
+            <p>All subsidiary governance frameworks are constructed to ensure operational coherence, regulatory compliance, and clear lines of fiduciary accountability.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num" aria-hidden="true">03</div>
+            <h4 class="pillar-title">Intellectual Privacy</h4>
+            <p>Proprietary methodologies, frameworks, and assets are protected under rigorous confidentiality protocols. Disclosure is limited to formally authorized institutional channels.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer aria-label="Page footer">
+      <div class="footer-inner">
+        <div class="footer-brand">Granite Field Holdings, Ltd. Co.</div>
+        <div class="footer-copy">&copy; <span class="year"></span> Granite Field Holdings, Ltd. Co. All rights reserved.</div>
+        <div class="footer-links">
+          <button onclick="showPage('compliance')">Legal</button>
+          <button onclick="showPage('contact')">Contact</button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- PAGE: GOVERNANCE & OPERATIONS                               -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="page-operations" class="page" role="main" aria-label="Governance and Operations">
+    <header class="page-header">
+      <div class="page-header-inner">
+        <p class="section-label">Operations &amp; Governance</p>
+        <h2 class="page-title">How the Firm<br />Operates</h2>
+        <p class="page-intro">Granite Field Holdings functions as a strategic governance body — allocating capital, establishing policy, and overseeing the structured management of its intellectual and digital asset portfolio.</p>
+      </div>
+    </header>
+
+    <section class="ops-body" aria-labelledby="ops-heading">
+      <div class="ops-inner">
+        <p class="ops-lead">"The firm does not produce or distribute goods or services directly. It governs, structures, and sustains the entities that do."</p>
+
+        <div class="ops-areas" role="list">
+          <article class="ops-area" role="listitem">
+            <div class="ops-area-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7 21h10a2 2 0 002-2V9l-5-5H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Intellectual Property Governance</h3>
+            <p>The Company manages the full lifecycle of proprietary intellectual assets — from origination and registration through licensing and end-of-life management.</p>
+            <ul>
+              <li>Acquisition and registration of proprietary frameworks</li>
+              <li>Licensing administration for cognitive and behavioral methodologies</li>
+              <li>IP protection and confidentiality protocol enforcement</li>
+              <li>Portfolio valuation and strategic asset review</li>
+            </ul>
+          </article>
+
+          <article class="ops-area" role="listitem">
+            <div class="ops-area-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Capital Allocation &amp; Asset Management</h3>
+            <p>Granite Field Holdings oversees the deployment of capital across subsidiary entities, ensuring each operational unit has the resources necessary to fulfill its designated mandate.</p>
+            <ul>
+              <li>Intercompany capital deployment and reallocation</li>
+              <li>Administrative oversight for subsidiary operations</li>
+              <li>Financial governance and internal reporting standards</li>
+              <li>Long-term asset sustainability planning</li>
+            </ul>
+          </article>
+
+          <article class="ops-area" role="listitem">
+            <div class="ops-area-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Strategic Architecture</h3>
+            <p>The firm designs high-level operational structures for its portfolio entities, encompassing digital media, educational platforms, and physical product ecosystems.</p>
+            <ul>
+              <li>Organizational and operational structuring for subsidiaries</li>
+              <li>Digital infrastructure design and governance</li>
+              <li>Educational resource framework administration</li>
+              <li>Media distribution channel oversight</li>
+            </ul>
+          </article>
+
+          <article class="ops-area" role="listitem">
+            <div class="ops-area-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Corporate Governance &amp; Policy</h3>
+            <p>Internal governance policy and compliance frameworks ensure all subsidiary entities operate within applicable legal, regulatory, and ethical boundaries at the state and federal level.</p>
+            <ul>
+              <li>Subsidiary policy development and enforcement</li>
+              <li>Regulatory compliance monitoring</li>
+              <li>Internal audit and governance review cycles</li>
+              <li>Legal and fiduciary accountability frameworks</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="governance-note" role="note">
+          <div class="governance-note-title">Institutional Note</div>
+          <p>Granite Field Holdings operates exclusively as a parent governance entity. All inquiries from financial institutions, legal counsel, or credentialed third parties are directed to the corporate contact channel. The firm maintains structured internal documentation supporting all operational claims and is prepared to engage appropriate institutional parties through verified formal channels only.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer aria-label="Page footer">
+      <div class="footer-inner">
+        <div class="footer-brand">Granite Field Holdings, Ltd. Co.</div>
+        <div class="footer-copy">&copy; <span class="year"></span> Granite Field Holdings, Ltd. Co. All rights reserved.</div>
+        <div class="footer-links">
+          <button onclick="showPage('compliance')">Legal</button>
+          <button onclick="showPage('contact')">Contact</button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- PAGE: COMPLIANCE & LEGAL                                    -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="page-compliance" class="page" role="main" aria-label="Compliance and Legal Notices">
+    <header class="page-header">
+      <div class="page-header-inner">
+        <p class="section-label">Legal &amp; Compliance</p>
+        <h2 class="page-title">Regulatory Disclosures<br />&amp; Legal Notices</h2>
+        <p class="page-intro">Granite Field Holdings, Ltd. Co. is committed to full compliance with all applicable federal, state, and local laws and regulations governing the operation of limited liability companies in New Mexico and the United States.</p>
+      </div>
+    </header>
+
+    <section class="compliance-body" aria-labelledby="compliance-heading">
+      <div class="compliance-inner">
+        <p class="section-label">Regulatory Framework</p>
+        <div class="compliance-grid" role="list">
+          <div class="compliance-block" role="listitem">
+            <h3>Entity Registration</h3>
+            <p>Granite Field Holdings, Ltd. Co. is a duly organized Limited Liability Company formed and registered in accordance with the New Mexico Limited Liability Company Act (NMSA 1978, §§ 53-19-1 through 53-19-74). The Company maintains an active registered agent for service of process as required by applicable state law.</p>
+          </div>
+          <div class="compliance-block" role="listitem">
+            <h3>Tax &amp; Financial Compliance</h3>
+            <p>The Company operates in compliance with all applicable federal tax obligations under the Internal Revenue Code and applicable New Mexico state tax statutes. All required employer identification, tax registration, and annual reporting obligations are fulfilled in accordance with applicable law.</p>
+          </div>
+          <div class="compliance-block" role="listitem">
+            <h3>Intellectual Property Law</h3>
+            <p>All intellectual property held, licensed, or administered by Granite Field Holdings is managed in compliance with:</p>
+            <ul>
+              <li>The U.S. Copyright Act (17 U.S.C.)</li>
+              <li>The Lanham Act (15 U.S.C. §§ 1051–1141n) governing trademarks</li>
+              <li>The Uniform Trade Secrets Act as adopted in New Mexico</li>
+              <li>Applicable digital asset and software licensing frameworks</li>
+            </ul>
+          </div>
+          <div class="compliance-block" role="listitem">
+            <h3>Privacy &amp; Data Governance</h3>
+            <p>The Company does not engage in the collection, sale, or distribution of personal data from third parties. Any data processed in connection with administrative operations is handled in accordance with applicable federal privacy statutes and New Mexico data protection requirements.</p>
+          </div>
+          <div class="compliance-block" role="listitem">
+            <h3>Anti-Money Laundering (AML)</h3>
+            <p>Granite Field Holdings maintains internal policies consistent with the Bank Secrecy Act and applicable FinCEN guidance governing private entities. The Company conducts all financial transactions through regulated financial institutions and maintains records in accordance with applicable federal requirements.</p>
+          </div>
+          <div class="compliance-block" role="listitem">
+            <h3>No Securities Activity</h3>
+            <p>Granite Field Holdings, Ltd. Co. is a private operating holding company and does not offer, sell, or solicit securities in any form. Nothing on this website constitutes an offer to sell, a solicitation of an offer to buy, or a recommendation of any security or investment product.</p>
+          </div>
+        </div>
+
+        <div class="legal-disclaimer" role="note">
+          <h3>General Legal Disclaimer</h3>
+          <p>This website is provided for informational purposes only. The content herein does not constitute legal, financial, investment, tax, or other professional advice. No attorney-client, fiduciary, or other professional relationship is formed by access to or use of this website.</p>
+          <p>Granite Field Holdings, Ltd. Co. makes no representations or warranties, express or implied, regarding the accuracy, completeness, or timeliness of any information on this site. The Company expressly disclaims liability for any errors or omissions in the content of this website and for any reliance placed upon it by any party.</p>
+          <p>Granite Field Holdings operates as a private holding company and is not subject to public reporting obligations. Financial and operational information disclosed herein is provided voluntarily for general institutional transparency purposes only and does not constitute a prospectus, disclosure document, or financial statement within the meaning of any applicable securities or corporate law.</p>
+          <p>All trademarks, service marks, trade names, and intellectual property referenced on this site are the property of their respective owners. No grant of license or right is implied or conferred by the appearance of any such intellectual property on this website.</p>
+          <p><strong>Governing Law:</strong> This website and any disputes arising from its use shall be governed by and construed in accordance with the laws of the State of New Mexico, without regard to conflict of law principles. Any legal action arising from or relating to this website shall be brought exclusively in the state or federal courts located in Bernalillo County, New Mexico.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer aria-label="Page footer">
+      <div class="footer-inner">
+        <div class="footer-brand">Granite Field Holdings, Ltd. Co.</div>
+        <div class="footer-copy">&copy; <span class="year"></span> Granite Field Holdings, Ltd. Co. All rights reserved.</div>
+        <div class="footer-links">
+          <button onclick="showPage('compliance')">Legal</button>
+          <button onclick="showPage('contact')">Contact</button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- PAGE: CONTACT                                               -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="page-contact" class="page" role="main" aria-label="Contact Information">
+    <header class="page-header">
+      <div class="page-header-inner">
+        <p class="section-label">Corporate Contact</p>
+        <h2 class="page-title">Institutional<br />Inquiries</h2>
+        <p class="page-intro">Granite Field Holdings operates privately and engages only with formally credentialed institutional parties through established corporate channels.</p>
+      </div>
+    </header>
+
+    <section class="contact-body" aria-labelledby="contact-heading">
+      <div class="contact-inner">
+        <div class="contact-info">
+          <h3>"We maintain a selective engagement policy. All formal inquiries are reviewed and responded to through appropriate institutional channels."</h3>
+
+          <dl>
+            <div class="contact-detail">
+              <dt class="contact-detail-label">Corporate Email</dt>
+              <dd class="contact-detail-value">
+                <a href="mailto:legal@granitefieldholdings.com">legal@granitefieldholdings.com</a>
+              </dd>
+            </div>
+            <div class="contact-detail">
+              <dt class="contact-detail-label">Registered Agent &amp; Mailing Address</dt>
+              <dd class="contact-detail-value">
+                1209 Mountain Road Pl NE, Suite N<br />
+                Albuquerque, NM 87110<br />
+                United States of America
+              </dd>
+            </div>
+            <div class="contact-detail">
+              <dt class="contact-detail-label">Jurisdiction of Formation</dt>
+              <dd class="contact-detail-value">State of New Mexico, USA</dd>
+            </div>
+            <div class="contact-detail">
+              <dt class="contact-detail-label">Response Protocol</dt>
+              <dd class="contact-detail-value">Institutional inquiries only. Written correspondence preferred. Response times vary based on inquiry classification.</dd>
+            </div>
+          </dl>
+        </div>
+
+        <aside class="contact-notice" aria-label="Contact policy notice">
+          <div class="contact-notice-title">Contact Policy</div>
+          <p>Granite Field Holdings <strong>does not accept</strong> unsolicited business proposals, partnership inquiries, cold outreach from vendors, or media and press requests of any kind.</p>
+          <p>This contact channel is reserved exclusively for:</p>
+          <p>
+            — Credentialed financial institutions<br />
+            — Legal counsel and law firms<br />
+            — Government agencies and regulatory bodies<br />
+            — Formally authorized institutional counterparties
+          </p>
+          <p>All correspondence is logged and reviewed. Unsolicited commercial correspondence will not receive a response and may be blocked.</p>
+          <p>For service of legal process, please direct to the Registered Agent at the mailing address listed. For all other institutional correspondence, written communication via the corporate email address is the preferred channel.</p>
+        </aside>
+      </div>
+    </section>
+
+    <footer aria-label="Page footer">
+      <div class="footer-inner">
+        <div class="footer-brand">Granite Field Holdings, Ltd. Co.</div>
+        <div class="footer-copy">&copy; <span class="year"></span> Granite Field Holdings, Ltd. Co. All rights reserved.</div>
+        <div class="footer-links">
+          <button onclick="showPage('compliance')">Legal</button>
+          <button onclick="showPage('contact')">Contact</button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ── Scripts ──────────────────────────────────────────────── -->
+  <script>
+    // Set copyright year
+    document.querySelectorAll('.year').forEach(el => el.textContent = new Date().getFullYear());
+
+    const pages = ['home', 'about', 'operations', 'compliance', 'contact'];
+    const navBtns = document.querySelectorAll('.nav-links button');
+    const mobileBtns = document.querySelectorAll('.mobile-menu button');
+
+    function showPage(id) {
+      // Hide all pages
+      pages.forEach(p => {
+        const el = document.getElementById('page-' + p);
+        el.classList.remove('active');
+      });
+
+      // Deactivate nav
+      navBtns.forEach((b, i) => {
+        b.classList.toggle('active', pages[i] === id);
+      });
+      mobileBtns.forEach((b, i) => {
+        b.classList.toggle('active', pages[i] === id);
+      });
+
+      // Show target page with entrance
+      const target = document.getElementById('page-' + id);
+      // Force reflow so transition fires
+      requestAnimationFrame(() => {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      });
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const ham = document.querySelector('.hamburger');
+      const open = menu.classList.toggle('open');
+      ham.setAttribute('aria-expanded', open);
+    }
+
+    function closeMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.querySelector('.hamburger').setAttribute('aria-expanded', 'false');
+    }
+
+    // Close mobile menu on outside click
+    document.addEventListener('click', e => {
+      if (!e.target.closest('nav') && !e.target.closest('.mobile-menu')) {
+        closeMenu();
+      }
+    });
+
+    // Keyboard nav
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  </script>
+</body>
+</html>
